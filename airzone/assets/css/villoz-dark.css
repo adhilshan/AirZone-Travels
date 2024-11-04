@@ -1,0 +1,234 @@
+:root {
+  --villoz-white: #0e1e34;
+  --villoz-white-rgb: toRGB(#0e1e34);
+  --villoz-black: #fff;
+  --villoz-black-rgb: toRGB(#fff);
+  --villoz-black2: #132742;
+  --villoz-black2-rgb: toRGB(#132742);
+}
+
+.villa-card__meta,
+.destination-one__item,
+.testimonials-one,
+.gallery-one--home-one,
+.gallery-one__card,
+.blog-card__link,
+.cta-one__content .villoz-btn,
+.cta-one__content .villoz-btn > i,
+.main-footer__social a,
+.background-black {
+  background-color: var(--villoz-white);
+}
+
+.main-footer__bottom__inner {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-header__bottom {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cta-one__sub-title,
+.main-footer__social a,
+.main-menu .main-menu__list > li > a,
+.main-menu .main-menu__list > li.current > a,
+.main-menu .main-menu__list > li:hover > a {
+  color: var(--villoz-black);
+}
+
+.main-menu .main-menu__list li ul li.current > a,
+.main-menu .main-menu__list li ul li:hover > a {
+  background-color: var(--villoz-black2);
+}
+
+.ui-datepicker-calendar .ui-state-highlight,
+.ui-datepicker-calendar .ui-widget-content .ui-state-highlight,
+.ui-datepicker-calendar .ui-widget-header .ui-state-highlight,
+.banner-form__control .bootstrap-select .dropdown-menu > li:hover > a,
+.banner-form__control .bootstrap-select .dropdown-menu > li.selected > a,
+.footer-widget__copyright a:hover,
+.main-header__cart,
+.main-header__search,
+.topbar-one__social a,
+.topbar-one__menu li,
+.topbar-one__info__icon,
+.topbar-one__info__item,
+.banner-one__title,
+.villa-card__btns__count,
+.villa-card__flash__label,
+.destination-one__offer__title,
+.destination-one__item__name,
+.feature-one__wrapper__middle-icon,
+.feature-one__content .sec-title__title,
+.testimonials-card__name,
+.testimonials-one__content__ratings i,
+.blog-card__date span,
+.cta-one__title,
+.footer-widget__contact li a:hover,
+.footer-widget__links li a:hover,
+.footer-widget__form button[type=submit],
+.footer-widget__title {
+  color: var(--villoz-black);
+}
+
+.destination-one__item__rent,
+.main-footer__social a:hover {
+  color: var(--villoz-white);
+  background-color: var(--villoz-black);
+}
+
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next,
+.banner-one__content,
+.feature-one__item,
+.footer-widget__form input[type=text] {
+  background-color: var(--villoz-black);
+}
+
+.footer-widget__form button[type=submit]:hover {
+  background-color: var(--villoz-white);
+  color: var(--villoz-black);
+}
+
+.banner-form__wrapper,
+.gallery-one__card__icon::after,
+.gallery-one__card__icon::before,
+.blog-card__image__link::before,
+.blog-card__image__link::after,
+.blog-card__date,
+.cta-one__content .villoz-btn > span {
+  background-color: var(--villoz-black);
+}
+
+.banner-form__control .bootstrap-select > .dropdown-toggle,
+.demo-one__btn:hover,
+.topbar-one__social a:hover,
+.banner-one__text span,
+.banner-form__control input[type=text],
+.banner-form__control input[type=number],
+.banner-form__control input[type=email],
+.service-one__content__title,
+.about-one__content-inner .villoz-btn:hover,
+.cta-one__content .villoz-btn:hover {
+  color: var(--villoz-white);
+}
+
+.sticky-header--cloned,
+.villa-card,
+.client-carousel__one__item:hover,
+.blog-card__content {
+  background-color: var(--villoz-black2);
+}
+
+.about-one__facts__text,
+.about-one__content-inner__text,
+.villa-card__meta li,
+.villa-card__price__shift,
+.villa-card__address,
+.testimonials-card__content,
+.testimonials-one__content__text,
+.blog-card__link,
+.blog-card__meta li,
+.sec-title__tagline {
+  color: var(--villoz-text-dark);
+}
+
+.testimonials-card__author img,
+.blog-card__date {
+  border-color: var(--villoz-black);
+}
+
+.testimonials-one {
+  border-color: var(--villoz-white);
+}
+
+.testimonials-card:hover {
+  border-color: var(--villoz-base);
+}
+
+.testimonials-card:hover .testimonials-card__author {
+  background-color: var(--villoz-base);
+}
+
+.feature-one__item__title {
+  color: var(--villoz-black2);
+}
+
+.villoz-btn--border {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.villoz-btn--border:hover {
+  color: var(--villoz-white);
+}
+
+.villa-card__like {
+  background-color: rgba(19, 39, 66, 0.2);
+  color: var(--villoz-black);
+}
+.villa-card__like:hover {
+  background-color: var(--villoz-white);
+}
+
+.blog-card__image__link {
+  background-color: rgba(19, 39, 66, 0.5);
+}
+
+.villa-card__image::after,
+.villa-card__image::before {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.about-one__facts__item:first-child {
+  background-image: linear-gradient(90deg, rgba(14, 30, 52, 0) 0%, rgb(11, 24, 42) 100%);
+}
+
+.villa-card__btns a.villoz-image-popup {
+  background-image: linear-gradient(90deg, rgba(19, 39, 66, 0) 0%, rgb(14, 30, 52) 100%);
+}
+
+.about-one__facts {
+  border-color: #1a2d48;
+}
+
+.service-one__content {
+  background-color: var(--villoz-black);
+  border-color: var(--villoz-white);
+}
+
+.service-one__content__rm {
+  background-color: var(--villoz-white);
+}
+.service-one__content__rm:hover {
+  background-color: var(--villoz-base);
+  color: var(--villoz-black);
+}
+
+.ui-datepicker .ui-datepicker-header,
+.ui-datepicker-calendar .ui-state-default:hover,
+.ui-datepicker-calendar .ui-widget-content .ui-state-default:hover,
+.ui-datepicker-calendar .ui-widget-header .ui-state-default:hover {
+  color: var(--villoz-black);
+}
+
+.ui-datepicker .ui-datepicker-header,
+.banner-form__wrapper .villoz-btn > span {
+  background-color: var(--villoz-white);
+}
+
+.topbar-one {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-header__btn:hover {
+  border-color: var(--villoz-white);
+}
+
+.testimonials-one__carousel-dots .owl-dot span {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.testimonials-one__carousel-dots .owl-dot:hover span,
+.testimonials-one__carousel-dots .owl-dot.active span {
+  background-color: rgb(255, 255, 255);
+}
+/*# sourceMappingURL=villoz-dark.css.map */
