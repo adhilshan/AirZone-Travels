@@ -1,33 +1,108 @@
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel"
+  style="z-index: 99999; max-width: 200px"
+>
+  <div class="offcanvas-header">
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="drw">
+      <li data-bs-dismiss="offcanvas"><a href="/">Home</a></li>
+      <li data-bs-dismiss="offcanvas"><a href="/">Book a Tour</a></li>
+      <li data-bs-dismiss="offcanvas"><a href="/#gallery">Gallery</a></li>
+      <li data-bs-dismiss="offcanvas"><a href="/#blogs">Blogs</a></li>
+      <li data-bs-dismiss="offcanvas"><a href="/about-us/">About Us</a></li>
+      <li data-bs-dismiss="offcanvas"><a href="/contact-us/">Contact Us</a></li>
+    </ul>
+    <style>
+    .drw{
+        list-style: none;
+        box-sizing: border-box;
+        padding: 0;
+        li{
+            padding: 10px 15px;
+            width: 100%;
+            border-radius: 6px;
+            a{
+                color: #444444;
+                text-decoration: none;
+            }
+        }
+    }
+    .offcanvas{
+        margin: 20px;
+        border-radius: 10px;
+        width: fit-content;
+    }
+</style>
+  </div>
+</div>
 <nav>
-    <div class="logo-c">
-        <div class="logo-i">
-            <img src="/assets/image/logo.png" alt="airzone-logo" onclick="window.location.href = '/'">
-        </div>
+  <div class="logo-c">
+    <div class="logo-i">
+      <img
+        src="/assets/image/logo.png"
+        alt="airzone-logo"
+        onclick="window.location.href = '/'"
+      />
     </div>
-    <div class="rem-c">
-        <div class="rem1">
-            <ul id="nav-rows">
-                <li><a href="/">Home</a></li>
-                <li><a href="">Book a Tour</a></li>
-                <li><a href="">Gallery</a></li>
-                <li><a href="">Blogs</a></li>
-                <li><a href="/about-us/">About Us</a></li>
-                <li><a href="/contact-us/">Contact Us</a></li>
-                <li>
-                    <button>
-                        Book Now
-                        <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M23.7796 8.83211C24.1702 8.44158 24.1702 7.80842 23.7796 7.41789L17.4157 1.05393C17.0252 0.663408 16.392 0.663408 16.0015 1.05393C15.6109 1.44446 15.6109 2.07762 16.0015 2.46815L21.6583 8.125L16.0015 13.7819C15.6109 14.1724 15.6109 14.8055 16.0015 15.1961C16.392 15.5866 17.0252 15.5866 17.4157 15.1961L23.7796 8.83211ZM-0.000976562 9.125H23.0725V7.125H-0.000976562V9.125Z" fill="white"/>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-            
-            <button id="menu-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 50 50">
-                    <path d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z" fill="white"></path>
-                </svg>
-            </button>
-        </div>
+  </div>
+  <div class="rem-c">
+    <div class="rem1">
+      <ul id="nav-rows">
+        <li><a href="/">Home</a></li>
+        <li><a href="">Book a Tour</a></li>
+        <li><a href="/#gallery">Gallery</a></li>
+        <li><a href="/#blogs">Blogs</a></li>
+        <li><a href="/about-us/">About Us</a></li>
+        <li><a href="/contact-us/">Contact Us</a></li>
+        <li>
+          <button>
+            Book Now
+            <svg
+              width="25"
+              height="16"
+              viewBox="0 0 25 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M23.7796 8.83211C24.1702 8.44158 24.1702 7.80842 23.7796 7.41789L17.4157 1.05393C17.0252 0.663408 16.392 0.663408 16.0015 1.05393C15.6109 1.44446 15.6109 2.07762 16.0015 2.46815L21.6583 8.125L16.0015 13.7819C15.6109 14.1724 15.6109 14.8055 16.0015 15.1961C16.392 15.5866 17.0252 15.5866 17.4157 15.1961L23.7796 8.83211ZM-0.000976562 9.125H23.0725V7.125H-0.000976562V9.125Z"
+                fill="white"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+
+      <button
+        id="menu-icon"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasExample"
+        aria-controls="offcanvasExample"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          x="0px"
+          y="0px"
+          width="30"
+          height="30"
+          viewBox="0 0 50 50"
+        >
+          <path
+            d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z"
+            fill="white"
+          ></path>
+        </svg>
+      </button>
     </div>
+  </div>
 </nav>

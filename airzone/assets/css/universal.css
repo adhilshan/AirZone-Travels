@@ -125,7 +125,30 @@ button:hover{
     background: var(--primary-color);
 }
 .dwnld-ticket{
-    padding: 100px 0;
+    padding: 100px 10vw;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    h1{
+        font-size: 1.2rem;
+    }
+    h2{
+        font-size: 1.7rem;
+        width: 80vw;
+    }
+}
+.dwnld-ticket::after{
+    content: '';
+    position: absolute;
+    right: 50%;
+    top: 0;
+    width: 250px;
+    height: 250px;
+    border: 40px solid var(--primary-color);
+    background: #f0f8ff;
+    opacity: 0.2;
+    transform: translateX(100%) translateY(50%) rotate(45deg);
+    z-index: -1;
 }
 @media screen and (max-width:1000px) {
     #menu-icon{

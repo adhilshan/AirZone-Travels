@@ -165,63 +165,35 @@
       </div>
       <!-- banner slider -->
       <div class="banner-three__content wow fadeInUp" data-wow-delay="500ms">
-        <div class="container row" style="align-items: center; margin-left:40px;">
-            <div class="col-8">
+        <div class="container row" style="align-items: center; gap:10px; padding:0 10px; margin-top:8px;">
+            <div class="col-lg-8 col-md-12 col-sm-12">
                 <input type="text" placeholder="Type Flight Number">
             </div>
-          <div class="col-4">
-                <button  style="margin-left: 20px;">Check Flight</button>
+          <div class="col-lg-4 col-md-12 col-sm-12">
+                <button  style="width: 100%; display:flex; justify-content:center; align-items:center;">Check Flight</button>
           </div>
         </div>
       </div>
     </section>
-    <section class="container dwnld-ticket">
+    <section class="dwnld-ticket">
       <h1>Forgot Your Ticket !?</h1>
       <h2>Don't Worry, Download it from here...</h2>
-      <div class="row" style="align-items: center;">
-            <div class="col-8">
+      <div class="row" style="align-items: center; gap:10px;">
+            <div class="col-lg-4 col-md-12 col-sm-12">
                 <input type="text" id="tic_num" placeholder="Type Your Ticket Number">
             </div>
-          <div class="col-4">
-                <button onclick="dwnld()">Download Ticket</button>
+          <div class="col-lg-2 col-md-12 col-sm-12">
+                <button onclick="dwnld()" style="width: 100%; display:flex; justify-content:center; align-items:center;">Download Ticket</button>
           </div>
         </div>
     </section>
-    <section class="about-two">
+    <section class="about-two" style="padding:0 5vw; padding-top: 0;">
       <div class="container">
         <div class="row">
-          <div class="col-xl-6">
-            <div
-              class="about-two__thumb-area wow fadeInLeft"
-              data-wow-delay="300ms"
-            >
-              <div class="about-two__dots">
-                <img
-                  src="/assets/images/resources/about-2-dot.png"
-                  alt=""
-                />
-              </div>
-              <div class="about-two__thumb">
-                <img src="/assets/images/resources/about-2-1.jpg" alt="villoz" />
-              </div>
-              <div
-                class="about-two__heading villoz-tilt"
-                data-tilt-options='{ "glare": false, "maxGlare": 0, "maxTilt": 9, "speed": 700, "scale": 1 }'
-              >
-                Feel Freedom
-              </div>
-              <div class="about-two__map">
-                <img
-                  src="/assets/images/resources/about-2-map.png"
-                  alt=""
-                />
-              </div>
-            </div>
-            <!-- /.about__image -->
-          </div>
+          
           <!-- /.col-lg-5 -->
           <div class="col-xl-6 wow fadeInRight" data-wow-delay="300ms">
-            <div class="about-two__content">
+            <div class="about-two__content" style="padding-top: 0;">
               <div class="sec-title text-left">
                 <h6 class="sec-title__tagline">Welcome to villox</h6>
                 <!-- /.sec-title__tagline -->
@@ -275,7 +247,7 @@
       <!-- /.container -->
     </section>
     <!-- /.about-two -->
-    <div class="destination-area position-relative overflow-hidden">
+    <div class="destination-area position-relative overflow-hidden" style="padding-top:100px;">
       <div class="container">
         <div class="title-area text-center">
           <span class="sub-title">Top Destination</span>
@@ -917,7 +889,7 @@
         </div>
       </div>
     </section>
-    <div class="gallery-area">
+    <div class="gallery-area" id="gallery">
       <div class="container th-container">
         <div class="title-area text-center">
           <span class="sub-title">Make Your Tour More Pleasure</span>
@@ -1036,9 +1008,12 @@
       </div>
     </div>
     <div style="display: flex; justify-content:center; padding:30px 0;">
-      <button class="share-btn">Share Your Story</button>
+        <button class="share-btn" onclick="document.getElementById('img-picker').click();">
+            Share Your Story
+        </button>
+      <input type="file" id="img-picker" accept=".jpg, .jpeg, .png" style="display: none;">
     </div>
-    <section class="bg-smoke overflow-hidden space" id="blog-sec">
+    <section class="bg-smoke overflow-hidden space" id="blogs">
       <div class="container">
         <div class="mb-30 text-center text-md-start">
           <div class="row align-items-center justify-content-between">
