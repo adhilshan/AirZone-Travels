@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Destinations</title>
+    <style>
+        *{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+  </head>
+  <body style="padding: 10px 5vw ;">
+    <h1>Add Destination</h1>
+    <div style="display: flex; flex-direction:column; max-width:300px; gap:10px;">
+        <input type="text" id="num" placeholder="Destination Name" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"/>
+        <label for="fp-picker">Thumbnail (Recommended 2:3 Images)</label>
+        <input type="file" id="fp-picker" accept=".jpg,.png,.jpeg,.gif" />
+        <button onclick="upload()" style="background: #2196F3; border:none; color:#FFFFFF; padding:10px 20px; border-radius:8px;">Add Destination</button>
+    </div>
+    <h1>Destinations</h1>
+    <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
+            <img src="/assets/img/gallery/gallery_1_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
+            <div class="actions" style="display: flex; justify-content:space-between;">
+                <h3 style="margin:0;">Maldives</h3>
+                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; border-radius:8px; padding:8px 20px ">Delete</button>
+            </div>
+            
+        </div>
+        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
+            <img src="/assets/img/destination/destination_1_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
+            <div class="actions" style="display: flex; justify-content:space-between;">
+                <h3 style="margin:0;">Maldives</h3>
+                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; border-radius:8px; padding:8px 20px ">Delete</button>
+            </div>
+            
+        </div>
+        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
+            <img src="/assets/img/destination/destination_1_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
+            <div class="actions" style="display: flex; justify-content:space-between;">
+                <h3 style="margin:0;">Maldives</h3>
+                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; border-radius:8px; padding:8px 20px ">Delete</button>
+            </div>
+            
+        </div>
+        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
+            <img src="/assets/img/destination/destination_1_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
+            <div class="actions" style="display: flex; justify-content:space-between;">
+                <h3 style="margin:0;">Maldives</h3>
+                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; border-radius:8px; padding:8px 20px ">Delete</button>
+            </div>
+            
+        </div>
+        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
+            <img src="/assets/img/destination/destination_1_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
+            <div class="actions" style="display: flex; justify-content:space-between;">
+                <h3 style="margin:0;">Maldives</h3>
+                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; border-radius:8px; padding:8px 20px ">Delete</button>
+            </div>
+            
+        </div>
+        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
+            <img src="/assets/img/destination/destination_1_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
+            <div class="actions" style="display: flex; justify-content:space-between;">
+                <h3 style="margin:0;">Maldives</h3>
+                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; border-radius:8px; padding:8px 20px ">Delete</button>
+            </div>
+            
+        </div>
+    </div>
+  </body>
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-storage.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.15.5-0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js" type="module"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCV1Z8-EZWdUwPnsAiPrRn6hScbt9_AnHs",
+      authDomain: "kaisonline.firebaseapp.com",
+      projectId: "kaisonline",
+      storageBucket: "kaisonline.appspot.com",
+      messagingSenderId: "1038384566126",
+      appId: "1:1038384566126:web:0a2dab22a90c750066bb7f",
+      measurementId: "G-336STKC5HQ",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+    const fires = firebase.firestore();
+    function upload() {
+      if (document.getElementById("num").value.trim() != "") {
+        const file = document.getElementById("fp-picker").files[0];
+        const storageRef = storage.ref("airzone/destinations" + file.name);
+        const uploadTask = storageRef.put(file);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            var progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progress = (Math.floor(progress * 10) / 10).toFixed(1);
+            console.log(progress + "%");
+          },
+          (error) => {
+            console.error("Error uploading file: ", error);
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              console.log("File download URL:", downloadURL);
+              firebase.auth().onAuthStateChanged(function (user) {});
+              const fires = firebase.firestore();
+              const data = {
+                doc: downloadURL,
+              };
+              fires
+                .collection("airzone/destinations/popular")
+                .doc(document.getElementById("num").value.trim())
+                .set(data)
+                .then((docRef) => {
+                  alert("Ticket Uploaded");
+                  window.location.href = "/admin/";
+                  console.log("Data written with ID: ", docRef.id);
+                })
+                .catch((error) => {
+                  console.error("Error adding ticket: ", error);
+                });
+            });
+          }
+        );
+      }
+    }
+  </script>
+</html>

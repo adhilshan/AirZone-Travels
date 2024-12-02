@@ -110,7 +110,8 @@ footer{
 }
 #menu-icon{
     display: none;
-}
+} 
+
 button{
     border: none;
     background: var(--secondary-color);

@@ -4,9 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airzone Admin</title>
+    <style>
+        body{
+            background: #EFEEEE;
+        }
+        *{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        h1{
+            text-align: center;
+            font-weight: 400;
+        }
+        .container{
+            padding: 10px 5vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 40px;
+            
+            a{
+                width: 100%;
+                max-width: 600px;
+                padding: 20px 50px;
+                background: #EFEEEE;
+                box-sizing: border-box;
+                text-align: center;
+                color: #000000ab;
+                font-size: 20px;
+                font-weight: 600;
+                text-decoration: none;
+                border-radius: 10px;
+                box-shadow: 6px 6px 16px #d1cdc78a , -6px -6px 16px #ffffffa2;
+                transition: all 1s ease;
+            }
+            a:hover{
+                box-shadow: -6px -6px 16px #1e78ff3f , 6px 6px 16px #1e78ff3f;
+                color: #1e78ff;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Airzone Admin</h1>
-    <a href="/admin/upload-ticket/">Add Flight Ticket</a>
+    <div class="container">
+        <a href="/admin/upload-ticket/">Add Flight Ticket</a>
+        <a href="/admin/add-destinations">Add/Delete Destinations</a>
+        <a href="/admin/add-packages">Add/Delete Packages</a>
+        <a href="/admin/gallery">Gallery</a>
+        <a href="/admin/blogs">Add/Delete Blogs</a>
+        <a href="/admin/queries">Queries</a>
+        <a href="/admin/mails">Mails</a>
+    </div>
 </body>
 </html>
