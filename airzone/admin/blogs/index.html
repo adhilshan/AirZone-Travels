@@ -13,68 +13,15 @@
   <body style="padding: 10px 5vw ;">
     <h1>Add Blog</h1>
     <div style="display: flex; flex-direction:column; max-width:300px; gap:10px;">
-        <input type="text" id="title" placeholder="Title" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"/>
-        <textarea id="des" placeholder="Description" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"></textarea>
+        <input type="text" id="nme" placeholder="Title" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"/>
+        <textarea id="desc" placeholder="Description" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"></textarea>
         <label for="fp-picker">Thumbnail (Recommended 1:1 Images)</label>
         <input type="file" id="fp-picker" accept=".jpg,.png,.jpeg,.gif" />
         <button onclick="upload()" style="background: #2196F3; border:none; color:#FFFFFF; padding:10px 20px; border-radius:8px;">Add Blog</button>
     </div>
     <h1>Packages</h1>
-    <div style="display:flex; flex-wrap:wrap; gap:10px;">
-        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
-            <img src="/assets/img/tour/tour_box_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
-            <div class="actions" style="display: flex; justify-content:space-between; flex-direction:column;">
-                <h3 style="margin:0;">Maldives</h3>
-                <p style="margin: 0; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; line-clamp: 2; text-overflow: ellipsis;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum asperiores hic deserunt quia perspiciatis sint</p>
-                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; margin-top:10px; border-radius:8px; padding:8px 20px ">Delete</button>
-            </div>
-            
-        </div>
-        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
-            <img src="/assets/img/tour/tour_box_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
-            <div class="actions" style="display: flex; justify-content:space-between; flex-direction:column;">
-                <h3 style="margin:0;">Maldives</h3>
-                <p style="margin: 0; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; line-clamp: 2; text-overflow: ellipsis;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum asperiores hic deserunt quia perspiciatis sint</p>
-                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; margin-top:10px; border-radius:8px; padding:8px 20px ">Delete</button>
-            </div>
-            
-        </div>
-        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
-            <img src="/assets/img/tour/tour_box_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
-            <div class="actions" style="display: flex; justify-content:space-between; flex-direction:column;">
-                <h3 style="margin:0;">Maldives</h3>
-                <p style="margin: 0; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; line-clamp: 2; text-overflow: ellipsis;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum asperiores hic deserunt quia perspiciatis sint</p>
-                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; margin-top:10px; border-radius:8px; padding:8px 20px ">Delete</button>
-            </div>
-            
-        </div>
-        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
-            <img src="/assets/img/tour/tour_box_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
-            <div class="actions" style="display: flex; justify-content:space-between; flex-direction:column;">
-                <h3 style="margin:0;">Maldives</h3>
-                <p style="margin: 0; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; line-clamp: 2; text-overflow: ellipsis;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum asperiores hic deserunt quia perspiciatis sint</p>
-                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; margin-top:10px; border-radius:8px; padding:8px 20px ">Delete</button>
-            </div>
-            
-        </div>
-        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
-            <img src="/assets/img/tour/tour_box_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
-            <div class="actions" style="display: flex; justify-content:space-between; flex-direction:column;">
-                <h3 style="margin:0;">Maldives</h3>
-                <p style="margin: 0; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; line-clamp: 2; text-overflow: ellipsis;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum asperiores hic deserunt quia perspiciatis sint</p>
-                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; margin-top:10px; border-radius:8px; padding:8px 20px ">Delete</button>
-            </div>
-            
-        </div>
-        <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 150px; margin-bottom:30px;">
-            <img src="/assets/img/tour/tour_box_1.jpg" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
-            <div class="actions" style="display: flex; justify-content:space-between; flex-direction:column;">
-                <h3 style="margin:0;">Maldives</h3>
-                <p style="margin: 0; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; line-clamp: 2; text-overflow: ellipsis;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum asperiores hic deserunt quia perspiciatis sint</p>
-                <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; margin-top:10px; border-radius:8px; padding:8px 20px ">Delete</button>
-            </div>
-            
-        </div>
+    <div style="display:flex; flex-wrap:wrap; gap:10px;" id="layout">
+        
     </div>
   </body>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
@@ -97,7 +44,7 @@
     const storage = firebase.storage();
     const fires = firebase.firestore();
     function upload() {
-      if (document.getElementById("num").value.trim() != "") {
+      if (document.getElementById("nme").value.trim() != "") {
         const file = document.getElementById("fp-picker").files[0];
         const storageRef = storage.ref("airzone/destinations" + file.name);
         const uploadTask = storageRef.put(file);
@@ -119,13 +66,14 @@
               const fires = firebase.firestore();
               const data = {
                 doc: downloadURL,
+                title: document.getElementById('nme').value,
+                des: document.getElementById('desc').value
               };
               fires
-                .collection("airzone/destinations/popular")
-                .doc(document.getElementById("num").value.trim())
-                .set(data)
+                .collection("airzone/blog/popular")
+                .add(data)
                 .then((docRef) => {
-                  alert("Ticket Uploaded");
+                  alert("Document Uploaded");
                   window.location.href = "/admin/";
                   console.log("Data written with ID: ", docRef.id);
                 })
@@ -135,6 +83,65 @@
             });
           }
         );
+      }
+    }
+
+    async function fetchData() {
+      const collectionRef = fires.collection("airzone/blog/popular");
+      try {
+        const snapshot = await collectionRef.get();
+        if (snapshot.empty) {
+          console.log("No matching documents.");
+          return;
+        }
+
+        const dataContainer = document.getElementById("data");
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          document.getElementById('layout').innerHTML += `
+              <div class="card" style="flex: 1 0 auto; display:flex; flex-direction:column; gap:10px; width: 250px; max-width: 250px; margin-bottom:30px;">
+                <img src="${data.doc}" alt="" style="width: 100%; object-fit:contain; border-radius:10px;">
+                <div class="actions" style="display: flex; justify-content:space-between; flex-direction:column;">
+                    <h3 style="margin:0;">${data.title}</h3>
+                    <p style="margin: 0; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 2; line-clamp: 2; text-overflow: ellipsis;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatum asperiores hic deserunt quia perspiciatis sint</p>
+                    <button onclick="deleteDest()" style="background: #D32F2F; color:#FFFFFF; border:none; margin-top:10px; border-radius:8px; padding:8px 20px ">Delete</button>
+                </div>
+              </div>
+          `;
+        });
+      } catch (error) {
+        console.error("Error fetching Firestore data:", error);
+      }
+    }
+
+    fetchData();
+    async function deleteDest(_id){
+      const collectionName = "airzone/blog/popular";
+      const documentId = _id;
+
+      try {
+        const docRef = fires.collection(collectionName).doc(documentId);
+        const docSnapshot = await docRef.get();
+
+        if (docSnapshot.exists) {
+          const imagePath = docSnapshot.data().doc;
+
+          if (imagePath) {
+            const imageRef = storage.ref(imagePath);
+            await imageRef.delete();
+            console.log("Image deleted successfully");
+          } else {
+            console.log("No imagePath found in the document.");
+          }
+
+          await docRef.delete();
+          console.log("Document deleted successfully");
+          window.location.reload();
+        } else {
+          console.log("Document not found");
+        }
+      } catch (error) {
+        console.error("Error deleting document or image:", error);
       }
     }
   </script>
