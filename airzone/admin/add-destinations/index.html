@@ -124,7 +124,7 @@
           const imagePath = docSnapshot.data().doc;
 
           if (imagePath) {
-            const imageRef = storage.ref(imagePath);
+            const imageRef = storage.refFromURL(imagePath);
             await imageRef.delete();
             console.log("Image deleted successfully");
           } else {
