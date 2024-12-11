@@ -148,8 +148,6 @@
                   </div>
                   <div class="col-lg-5">
                     <div class="banner-three__thumb__right">
-
-                      </div>
                       <img
                         src="/assets/images/resources/slider-3-2-2.jpg"
                         alt=""
@@ -189,13 +187,13 @@
     </section>
     <section class="about-two" style="padding:0 5vw; padding-top: 0;">
       <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
           
           <!-- /.col-lg-5 -->
-          <div class="col-xl-6 wow fadeInRight" data-wow-delay="300ms">
-            <div class="about-two__content" style="padding-top: 0;">
-              <div class="sec-title text-left">
-                <h6 class="sec-title__tagline">Welcome to villox</h6>
+          <div class="col-xl-10 wow fadeInRight" data-wow-delay="300ms">
+            <div class="about-two__content" style="padding-top: 0; display: flex; flex-direction: column; text-align: center; align-items: center;">
+              <div class="sec-title text-left" style="width: 100%;">
+                <h6 class="sec-title__tagline">Welcome to airzone</h6>
                 <!-- /.sec-title__tagline -->
 
                 <h3 class="sec-title__title">
@@ -210,7 +208,7 @@
                 randomised words which don't look even slightly.
               </p>
               <div class="row">
-                <div class="col-lg-8 col-md-7">
+                <div class="col-12">
                   <ul class="about-two__list">
                     <li>
                       <span class="fa fa-check-circle"></span>Guarantee
@@ -1117,5 +1115,22 @@
     document.getElementById('ticket-close').style.transform = 'rotate(90deg)';
   }
 </script>
+<style>
+  .banner-three__title{
+    font-weight: 600;
+    width: 70%;
+    max-width: 500px;
+  }
+  @media screen and (max-width:800px) {
+	.banner-three__thumb__left img{
+		display: none;
+		border-radius: 10px;
+	}
+	.banner-three__thumb__right img{
+		display: none;
+		border-radius: 10px;
+	}
+}
+</style>
 <script src="/scri.js"></script>
 </html>
