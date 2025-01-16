@@ -22,7 +22,7 @@ header{
         width: 100%;
         height: 80px;
         justify-content: space-between;
-        z-index: 9999;
+        z-index: 99;
         .logo-c{
             background: #FFFFFF;
             height: 80px;
