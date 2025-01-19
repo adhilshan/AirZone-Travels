@@ -614,11 +614,11 @@
           <li></li>
         </ul>
         <div class="ticket">
-          <span class="airline">Lufthansa</span>
-          <span class="airline airlineslip">Lufthansa</span>
-          <span class="boarding">Boarding pass</span>
+          <span class="airline"></span>
+          <span class="airline airlineslip"></span>
+          <span class="boarding">Flight Info</span>
           <div class="content">
-            <span class="jfk">JFK</span>
+            <span class="jfk"></span>
             <span class="plane">
               <?xml version="1.0" ?><svg clip-rule="evenodd" fill-rule="evenodd" height="60" width="60" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                 <g stroke="#222">
@@ -627,9 +627,9 @@
                 </g>
               </svg>
             </span>
-            <span class="sfo">SFO</span>
+            <span class="sfo"></span>
       
-            <span class="jfk jfkslip">JFK</span>
+            <span class="jfk jfkslip"></span>
             <span class="plane planeslip">
               <?xml version="1.0" ?><svg clip-rule="evenodd" fill-rule="evenodd" height="50" width="50" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                 <g stroke="#222">
@@ -638,22 +638,13 @@
                 </g>
               </svg>
             </span>
-            <span class="sfo sfoslip">SFO</span>
+            <span class="sfo sfoslip"></span>
             <div class="sub-content">
-              <span class="watermark">Air India</span>
-              <span class="name">PASSENGER NAME<br><span>Rex, Anonasaurus</span></span>
-              <span class="flight">FLIGHT N&deg;<br><span>X3-65C3</span></span>
-              <span class="gate">GATE<br><span>11B</span></span>
-              <span class="seat">SEAT<br><span>45A</span></span>
+              <span class="name"><span></span></span>
+              <span class="seat"><span></span></span>
               <span class="boardingtime">BOARDING TIME<br><span>8:25PM ON AUGUST 2013</span></span>
-      
-              <span class="flight flightslip">FLIGHT N&deg;<br><span>X3-65C3</span></span>
-              <span class="seat seatslip">SEAT<br><span>45A</span></span>
-              <span class="name nameslip">PASSENGER NAME<br><span>Rex, Anonasaurus</span></span>
             </div>
           </div>
-          <div class="barcode"></div>
-          <div class="barcode slip"></div>
         </div>
       </div>
     </section>
@@ -801,6 +792,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-storage.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.15.5-0/firebase.js"></script>
+<script src="dummy.js"></script>
 <script
   src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js"
   type="module"
@@ -810,15 +802,15 @@
   document.getElementById('flight-num').addEventListener('input', ()=>{
     document.getElementById('flight-num').value = document.getElementById('flight-num').value.toUpperCase();
   })
-  function checkFlight(){
-    // https://api.aviationstack.com/v1/flights?access_key=5f6b6ed1bf10462376a52cc7808665b6&flight_iata=AA100
+  
+  async function checkFlight(){
     if (document.getElementById('flight-num').value.trim() == "") {
       const Toast = Swal.mixin({
-      toast: true,
-      position: "bottom-end",
-      showConfirmButton: false,
-      timer: 5000,
-      timerProgressBar: true,
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
           toast.onmouseleave = Swal.resumeTimer;
@@ -830,6 +822,61 @@
       });
       return null;
     }
+
+    try {
+      const flightNum = document.getElementById('flight-num').value;
+      const response = await fetch(`https://api.aviationstack.com/v1/flights?access_key=5f6b6ed1bf10462376a52cc7808665b6&flight_iata=${flightNum}`);
+      const data = await response.json();
+      if (data.data && data.data.length > 0) {
+        const flight = data.data[0];
+        document.querySelector('.airline').textContent = flight.airline?.name || 'Unknown Airline';
+        document.querySelector('.airlineslip').textContent = flight.airline?.name || 'Unknown Airline';
+        document.querySelector('.jfk').textContent = flight.departure?.iata || 'N/A';
+        document.querySelector('.jfkslip').textContent = flight.departure?.iata || 'N/A';
+        document.querySelector('.sfo').textContent = flight.arrival?.iata || 'N/A';
+        document.querySelector('.sfoslip').textContent = flight.arrival?.iata || 'N/A';
+        document.querySelector('.name span').textContent = 'From : ' + flight.departure?.airport || 'N/A';
+        document.querySelector('.seat span').textContent = 'To : ' +flight.arrival?.airport || 'N/A';
+        document.querySelector('.boardingtime span').innerHTML = 
+          `${new Date(flight.departure?.scheduled).toLocaleString() || 'N/A'} - ${new Date(flight.arrival?.scheduled).toLocaleString() || 'N/A'}` + '<br> Status : ' + flight.flight_status + ' | Departure Terminal : '+ flight.departure.terminal + ' | Departure Gate : ' + flight.departure.gate;
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Flight Not Found"
+        });
+        return;
+      }
+    } catch (error) {
+      console.error('Error fetching flight data:', error);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Error fetching flight data"
+      });
+      return;
+    }
+
     document.querySelector('.popup-airline').style.display = 'flex';
   }
   if (window.innerWidth < 600) {

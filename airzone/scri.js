@@ -94,7 +94,7 @@ async function fetchData() {
                   </div>
                   <div class="tour-content">
                     <h3 class="box-title">
-                      <a href="tour-details.html">${data.name}</a>
+                      <a href="/tour-details">${data.name}</a>
                     </h3>
                     
                     <h4 class="tour-box_price">
