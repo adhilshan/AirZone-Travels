@@ -792,101 +792,11 @@
 <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-storage.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.15.5-0/firebase.js"></script>
-<script src="dummy.js"></script>
 <script
   src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js"
   type="module"
 ></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-  document.getElementById('flight-num').addEventListener('input', ()=>{
-    document.getElementById('flight-num').value = document.getElementById('flight-num').value.toUpperCase();
-  })
-  
-  async function checkFlight(){
-    if (document.getElementById('flight-num').value.trim() == "") {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 5000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "error",
-        title: "Flight Number is Required"
-      });
-      return null;
-    }
-
-    try {
-      const flightNum = document.getElementById('flight-num').value;
-      const response = await fetch(`https://api.aviationstack.com/v1/flights?access_key=5f6b6ed1bf10462376a52cc7808665b6&flight_iata=${flightNum}`);
-      const data = await response.json();
-      if (data.data && data.data.length > 0) {
-        const flight = data.data[0];
-        document.querySelector('.airline').textContent = flight.airline?.name || 'Unknown Airline';
-        document.querySelector('.airlineslip').textContent = flight.airline?.name || 'Unknown Airline';
-        document.querySelector('.jfk').textContent = flight.departure?.iata || 'N/A';
-        document.querySelector('.jfkslip').textContent = flight.departure?.iata || 'N/A';
-        document.querySelector('.sfo').textContent = flight.arrival?.iata || 'N/A';
-        document.querySelector('.sfoslip').textContent = flight.arrival?.iata || 'N/A';
-        document.querySelector('.name span').textContent = 'From : ' + flight.departure?.airport || 'N/A';
-        document.querySelector('.seat span').textContent = 'To : ' +flight.arrival?.airport || 'N/A';
-        document.querySelector('.boardingtime span').innerHTML = 
-          `${new Date(flight.departure?.scheduled).toLocaleString() || 'N/A'} - ${new Date(flight.arrival?.scheduled).toLocaleString() || 'N/A'}` + '<br> Status : ' + flight.flight_status + ' | Departure Terminal : '+ flight.departure.terminal + ' | Departure Gate : ' + flight.departure.gate;
-      } else {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "bottom-end",
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "error",
-          title: "Flight Not Found"
-        });
-        return;
-      }
-    } catch (error) {
-      console.error('Error fetching flight data:', error);
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 5000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "error",
-        title: "Error fetching flight data"
-      });
-      return;
-    }
-
-    document.querySelector('.popup-airline').style.display = 'flex';
-  }
-  if (window.innerWidth < 600) {
-    document.getElementById('ticket-cont').style.transform = 'rotate(90deg)';
-    document.getElementById('ticket-close').style.top = 'unset';
-    document.getElementById('ticket-close').style.bottom = '30px';
-    document.getElementById('ticket-close').style.right = '-10px';
-    document.getElementById('ticket-close').style.transform = 'rotate(90deg)';
-  }
-</script>
 <style>
   .banner-three__title{
     font-weight: 600;

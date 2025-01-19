@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Offers Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .flight-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        .date-card {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Flight Offers Management</h2>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Add New Flight Route</h4>
+            </div>
+            <div class="card-body">
+                <form id="addFlightForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Airline Logo</label>
+                            <input type="file" class="form-control" id="logo" accept="image/*" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Takeoff Short (e.g., CCJ)</label>
+                            <input type="text" class="form-control" id="takeoffShort" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Land Short (e.g., BLR)</label>
+                            <input type="text" class="form-control" id="landShort" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Takeoff Full Name</label>
+                            <input type="text" class="form-control" id="takeoffFull" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Land Full Name</label>
+                            <input type="text" class="form-control" id="landFull" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Flight Route</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Add Flight Date</h4>
+            </div>
+            <div class="card-body">
+                <form id="addDateForm">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Select Flight Route</label>
+                            <select class="form-control" id="flightSelect" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>Month</label>
+                            <input type="text" class="form-control" id="month" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Day</label>
+                            <input type="text" class="form-control" id="day" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Year</label>
+                            <input type="text" class="form-control" id="year" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>From Time</label>
+                            <input type="text" class="form-control" id="fromTime" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>To Time</label>
+                            <input type="text" class="form-control" id="toTime" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Price</label>
+                            <input type="number" class="form-control" id="price" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Flight Date</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Existing Flights</h4>
+            </div>
+            <div class="card-body" id="flightsList">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCV1Z8-EZWdUwPnsAiPrRn6hScbt9_AnHs",
+  authDomain: "kaisonline.firebaseapp.com",
+  projectId: "kaisonline",
+  storageBucket: "kaisonline.appspot.com",
+  messagingSenderId: "1038384566126",
+  appId: "1:1038384566126:web:0a2dab22a90c750066bb7f",
+  measurementId: "G-336STKC5HQ",
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+function showToast(icon, title) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+    Toast.fire({ icon, title });
+}
+
+document.getElementById('addFlightForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    try {
+        const logoFile = document.getElementById('logo').files[0];
+        if (!logoFile) {
+            throw new Error('Please select a logo image');
+        }
+
+        // Show loading
+        Swal.fire({
+            title: 'Uploading...',
+            text: 'Please wait while we upload the image',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Upload image to Firebase Storage
+        const storageRef = storage.ref();
+        const logoRef = storageRef.child(`airline-logos/${Date.now()}-${logoFile.name}`);
+        await logoRef.put(logoFile);
+        const logoUrl = await logoRef.getDownloadURL();
+
+        const flightData = {
+            logo: logoUrl,
+            takeoffShort: document.getElementById('takeoffShort').value.toUpperCase(),
+            landShort: document.getElementById('landShort').value.toUpperCase(),
+            takeoffFull: document.getElementById('takeoffFull').value,
+            landFull: document.getElementById('landFull').value
+        };
+
+        await db.collection('airzone/flights/offers').add(flightData);
+        Swal.close();
+        showToast('success', 'Flight route added successfully');
+        document.getElementById('addFlightForm').reset();
+        loadFlights();
+        updateFlightSelect();
+    } catch (error) {
+        Swal.close();
+        console.error('Error adding flight:', error);
+        showToast('error', error.message || 'Error adding flight route');
+    }
+});
+
+document.getElementById('addDateForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    try {
+        const flightId = document.getElementById('flightSelect').value;
+        const dateData = {
+            month: document.getElementById('month').value,
+            day: document.getElementById('day').value,
+            year: document.getElementById('year').value,
+            fromTime: document.getElementById('fromTime').value,
+            toTime: document.getElementById('toTime').value,
+            price: Number(document.getElementById('price').value),
+            from: '',
+            to: ''
+        };
+
+        // Get flight route details to set from/to
+        const flightDoc = await db.collection('airzone/flights/offers').doc(flightId).get();
+        const flightData = flightDoc.data();
+        dateData.from = flightData.takeoffFull;
+        dateData.to = flightData.landFull;
+
+        await db.collection('airzone/flights/offers').doc(flightId).collection('dates').add(dateData);
+        showToast('success', 'Flight date added successfully');
+        document.getElementById('addDateForm').reset();
+        loadFlights();
+    } catch (error) {
+        console.error('Error adding flight date:', error);
+        showToast('error', 'Error adding flight date');
+    }
+});
+
+async function loadFlights() {
+    try {
+        const snapshot = await db.collection('airzone/flights/offers').get();
+        const flightsList = document.getElementById('flightsList');
+        flightsList.innerHTML = '';
+
+        for (const doc of snapshot.docs) {
+            const flight = doc.data();
+            const datesSnapshot = await db.collection('airzone/flights/offers').doc(doc.id).collection('dates').get();
+            
+            const flightCard = document.createElement('div');
+            flightCard.className = 'flight-card';
+            flightCard.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5>${flight.takeoffShort} → ${flight.landShort}</h5>
+                    <button class="btn btn-danger btn-sm" onclick="deleteFlight('${doc.id}')">Delete Route</button>
+                </div>
+                <p>${flight.takeoffFull} to ${flight.landFull}</p>
+                <img src="${flight.logo}" alt="Airline Logo" style="height: 30px; margin-bottom: 10px;">
+                <div class="dates-container">
+                    <h6>Flight Dates:</h6>
+                    ${datesSnapshot.empty ? '<p>No dates added yet</p>' : ''}
+                </div>
+            `;
+
+            const datesContainer = flightCard.querySelector('.dates-container');
+            datesSnapshot.forEach(dateDoc => {
+                const date = dateDoc.data();
+                const dateCard = document.createElement('div');
+                dateCard.className = 'date-card';
+                dateCard.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>${date.month} ${date.day}, ${date.year} (${date.fromTime} - ${date.toTime})</span>
+                        <button class="btn btn-danger btn-sm" onclick="deleteDate('${doc.id}', '${dateDoc.id}')">Delete</button>
+                    </div>
+                    <div>Price: ₹${date.price}</div>
+                `;
+                datesContainer.appendChild(dateCard);
+            });
+
+            flightsList.appendChild(flightCard);
+        }
+    } catch (error) {
+        console.error('Error loading flights:', error);
+        showToast('error', 'Error loading flights');
+    }
+}
+async function updateFlightSelect() {
+    try {
+        const snapshot = await db.collection('airzone/flights/offers').get();
+        const select = document.getElementById('flightSelect');
+        select.innerHTML = '<option value="">Select a flight route</option>';
+        
+        snapshot.forEach(doc => {
+            const flight = doc.data();
+            select.innerHTML += `
+                <option value="${doc.id}">
+                    ${flight.takeoffShort} → ${flight.landShort} (${flight.takeoffFull} to ${flight.landFull})
+                </option>
+            `;
+        });
+    } catch (error) {
+        console.error('Error updating flight select:', error);
+        showToast('error', 'Error loading flight routes');
+    }
+}
+
+async function deleteFlight(flightId) {
+    try {
+        if (await confirmDelete('Are you sure you want to delete this flight route?')) {
+            const flightDoc = await db.collection('airzone/flights/offers').doc(flightId).get();
+            const flightData = flightDoc.data();
+            
+            if (flightData.logo) {
+                try {
+                    const logoRef = storage.refFromURL(flightData.logo);
+                    await logoRef.delete();
+                } catch (error) {
+                    console.error('Error deleting logo:', error);
+                }
+            }
+
+            const datesSnapshot = await db.collection('airzone/flights/offers').doc(flightId).collection('dates').get();
+            const batch = db.batch();
+            datesSnapshot.forEach(doc => {
+                batch.delete(doc.ref);
+            });
+            await batch.commit();
+
+            // Delete the flight document
+            await db.collection('airzone/flights/offers').doc(flightId).delete();
+            showToast('success', 'Flight route deleted successfully');
+            loadFlights();
+            updateFlightSelect();
+        }
+    } catch (error) {
+        console.error('Error deleting flight:', error);
+        showToast('error', 'Error deleting flight route');
+    }
+}
+
+async function deleteDate(flightId, dateId) {
+    try {
+        if (await confirmDelete('Are you sure you want to delete this flight date?')) {
+            await db.collection('airzone/flights/offers').doc(flightId).collection('dates').doc(dateId).delete();
+            showToast('success', 'Flight date deleted successfully');
+            loadFlights();
+        }
+    } catch (error) {
+        console.error('Error deleting date:', error);
+        showToast('error', 'Error deleting flight date');
+    }
+}
+
+function confirmDelete(message) {
+    return Swal.fire({
+        title: 'Confirm Delete',
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => result.isConfirmed);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadFlights();
+    updateFlightSelect();
+});
+</script>
+</html>

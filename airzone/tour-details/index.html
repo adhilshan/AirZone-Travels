@@ -55,14 +55,83 @@
     />
     <link rel="stylesheet" href="/newstyle.css">
     <link rel="stylesheet" href="/assets/css/universal.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.0.2/marked.min.js"></script>
+    <!-- Add SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      .package-images {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+      }
+      
+      .package-images img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+      
+      .package-images img:hover {
+        transform: scale(1.05);
+      }
+      
+      .package-price {
+        font-size: 2rem;
+        color: #2196F3;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+      
+      .package-description {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 12px;
+        margin: 20px 0;
+        line-height: 1.6;
+      }
+      
+      .package-description img {
+        max-width: 100%;
+        height: auto;
+        margin: 10px 0;
+      }
+      
+      .package-description h1,
+      .package-description h2,
+      .package-description h3 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      
+      .package-description p {
+        margin-bottom: 15px;
+      }
+      
+      .package-description ul,
+      .package-description ol {
+        margin-left: 20px;
+        margin-bottom: 15px;
+      }
+    </style>
   </head>
   <body class="container" style="padding-top: 100px;">
     <header></header>
-    <h1 class="text-center">Portfolio</h1>
-    <div class="portfolio-area mt-5">
-      <div class="row g-4" id="portfolio-grid">
-        
-      </div>
+    <h1 class="text-center" id="packageTitle"></h1>
+    
+    <div class="package-images" id="imageGallery">
+      <!-- Images will be loaded here -->
+    </div>
+    
+    <div class="text-center package-price" id="packagePrice">
+      <!-- Price will be loaded here -->
+    </div>
+    
+    <div class="package-description" id="packageDescription">
+      <!-- Description will be rendered here -->
     </div>
   </body>
   <script src="/lib/router.js" type="module"></script>
@@ -85,5 +154,105 @@
 
 firebase.initializeApp(firebaseConfig);
 const fires = firebase.firestore();
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Show loading popup immediately
+    Swal.fire({
+      title: 'Loading Package Details',
+      html: 'Please wait...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    // Get package name from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const packageName = urlParams.get('package');
+    
+    if (!packageName) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Package Not Found',
+        text: 'Invalid package name'
+      }).then(() => {
+        window.location.href = '/';
+      });
+      return;
+    }
+
+    try {
+      const docRef = fires.collection("airzone/packages/popular").doc(packageName);
+      const doc = await docRef.get();
+      
+      if (doc.exists) {
+        const data = doc.data();
+        
+        // Update title
+        document.getElementById('packageTitle').textContent = data.name;
+        document.title = `Airzone | ${data.name}`;
+        
+        // Load images
+        const imageGallery = document.getElementById('imageGallery');
+        if (data.additionalImages && data.additionalImages.length > 0) {
+          data.additionalImages.forEach(imageUrl => {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = data.name;
+            img.onclick = () => {
+              Swal.fire({
+                imageUrl: imageUrl,
+                imageAlt: data.name,
+                width: '80%',
+                showConfirmButton: false,
+                background: '#000000dd',
+                imageClass: 'img-fluid'
+              });
+            };
+            imageGallery.appendChild(img);
+          });
+        }
+
+        document.getElementById('packagePrice').innerHTML = `
+          <div class="price-container" style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0;">
+            <div class="price-text">
+              ${data.value}/Person
+            </div>
+            <button class="book-now-btn" style="background: #2196F3; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background 0.3s ease;">
+              Book Now
+            </button>
+          </div>
+        `;
+        
+        // Render description using marked
+        const descriptionHtml = marked(data.description || '', { 
+          breaks: true,
+          sanitize: true 
+        });
+        document.getElementById('packageDescription').innerHTML = descriptionHtml;
+        
+        // Close loading popup
+        Swal.close();
+        
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Package Not Found',
+          text: 'The requested package does not exist'
+        }).then(() => {
+          window.location.href = '/';
+        });
+      }
+    } catch (error) {
+      console.error("Error loading package:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to load package details'
+      });
+    }
+  });
 </script>
 </html>

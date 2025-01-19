@@ -15,8 +15,11 @@
     <div style="display: flex; flex-direction:column; max-width:300px; gap:10px;">
         <input type="text" id="nme" placeholder="Package Name" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"/>
         <input type="text" id="price" placeholder="Price per person" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"/>
+        <textarea id="description" placeholder="Package Description" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px; min-height:100px;"></textarea>
         <label for="fp-picker">Thumbnail (Recommended 1:1 Images)</label>
         <input type="file" id="fp-picker" accept=".jpg,.png,.jpeg,.gif" />
+        <label for="additional-images">Additional Images</label>
+        <input type="file" id="additional-images" accept=".jpg,.png,.jpeg,.gif" multiple />
         <button onclick="upload()" style="background: #2196F3; border:none; color:#FFFFFF; padding:10px 20px; border-radius:8px;">Add Package</button>
     </div>
     <h1>Packages</h1>
@@ -30,6 +33,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-storage.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.15.5-0/firebase.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCV1Z8-EZWdUwPnsAiPrRn6hScbt9_AnHs",
@@ -46,45 +50,114 @@
     const fires = firebase.firestore();
     function upload() {
       if (document.getElementById("nme").value.trim() != "") {
-        const file = document.getElementById("fp-picker").files[0];
-        const storageRef = storage.ref("airzone/destinations" + file.name);
-        const uploadTask = storageRef.put(file);
+        const thumbnailFile = document.getElementById("fp-picker").files[0];
+        const additionalFiles = document.getElementById("additional-images").files;
+        const imageUrls = [];
+
+        Swal.fire({
+          title: 'Uploading Files...',
+          html: 'Progress: 0%',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        const storageRef = storage.ref("airzone/destinations/" + thumbnailFile.name);
+        const uploadTask = storageRef.put(thumbnailFile);
+        
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            var progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             progress = (Math.floor(progress * 10) / 10).toFixed(1);
-            console.log(progress + "%");
+            Swal.update({
+              html: `Uploading thumbnail: ${progress}%`
+            });
           },
           (error) => {
-            console.error("Error uploading file: ", error);
-          },
-          () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-              console.log("File download URL:", downloadURL);
-              firebase.auth().onAuthStateChanged(function (user) {});
-              const fires = firebase.firestore();
-              const data = {
-                doc: downloadURL,
-                name: document.getElementById('nme').value,
-                value: document.getElementById('price').value
-              };
-              fires
-                .collection("airzone/packages/popular")
-                .doc(document.getElementById("nme").value.trim())
-                .set(data)
-                .then((docRef) => {
-                  alert("Document Uploaded");
-                  window.location.href = "/admin/";
-                  console.log("Data written with ID: ", docRef.id);
-                })
-                .catch((error) => {
-                  console.error("Error adding ticket: ", error);
-                });
+            console.error("Error uploading thumbnail: ", error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Upload Failed',
+              text: 'Error uploading thumbnail'
             });
+          },
+          async () => {
+            const thumbnailUrl = await uploadTask.snapshot.ref.getDownloadURL();
+            imageUrls.push(thumbnailUrl);
+
+            // Upload additional images
+            let totalAdditional = additionalFiles.length;
+            for (let i = 0; i < additionalFiles.length; i++) {
+              Swal.update({
+                html: `Uploading additional image ${i + 1} of ${totalAdditional}`
+              });
+
+              const file = additionalFiles[i];
+              const additionalRef = storage.ref("airzone/destinations/" + file.name);
+              const additionalUpload = additionalRef.put(file);
+              
+              try {
+                await additionalUpload;
+                const url = await additionalRef.getDownloadURL();
+                imageUrls.push(url);
+              } catch (error) {
+                console.error("Error uploading additional image: ", error);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Upload Failed',
+                  text: 'Error uploading additional image'
+                });
+                return;
+              }
+            }
+
+            // Save to Firestore
+            Swal.update({
+              html: 'Saving package information...'
+            });
+
+            const data = {
+              doc: thumbnailUrl,
+              additionalImages: imageUrls,
+              name: document.getElementById('nme').value,
+              value: document.getElementById('price').value,
+              description: document.getElementById('description').value
+            };
+
+            fires
+              .collection("airzone/packages/popular")
+              .doc(document.getElementById("nme").value.trim())
+              .set(data)
+              .then((docRef) => {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: 'Package uploaded successfully',
+                  timer: 2000,
+                  showConfirmButton: false
+                }).then(() => {
+                  window.location.href = "/admin/";
+                });
+              })
+              .catch((error) => {
+                console.error("Error adding package: ", error);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Upload Failed',
+                  text: 'Error saving package information'
+                });
+              });
           }
         );
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Missing Information',
+          text: 'Please enter a package name'
+        });
       }
     }
 
@@ -123,25 +196,30 @@
       try {
         const docRef = fires.collection(collectionName).doc(documentId);
         const docSnapshot = await docRef.get();
-        console.log(docSnapshot)
+        
         if (docSnapshot.exists) {
-          const imagePath = docSnapshot.data().doc;
-          if (imagePath) {
-            const imageRef = storage.refFromURL(imagePath);
-            await imageRef.delete();
-            console.log("Image deleted successfully");
-          } else {
-            console.log("No imagePath found in the document.");
+          const data = docSnapshot.data();
+          // Delete thumbnail and additional images
+          if (data.doc) {
+            const thumbnailRef = storage.refFromURL(data.doc);
+            await thumbnailRef.delete();
+          }
+          
+          if (data.additionalImages && data.additionalImages.length > 0) {
+            for (const imageUrl of data.additionalImages) {
+              const imageRef = storage.refFromURL(imageUrl);
+              await imageRef.delete();
+            }
           }
 
           await docRef.delete();
-          console.log("Document deleted successfully");
+          console.log("Document and all images deleted successfully");
           window.location.reload();
         } else {
           console.log("Document not found");
         }
       } catch (error) {
-        console.error("Error deleting document or image:", error);
+        console.error("Error deleting document or images:", error);
       }
     }
   </script>
