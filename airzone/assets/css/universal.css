@@ -23,55 +23,33 @@ header{
         height: 80px;
         justify-content: space-between;
         z-index: 99;
-        .logo-c{
-            background: #FFFFFF;
-            height: 80px;
-            .logo-i{
-                height: 80px;
-                width: 180px;
-                background: var(--primary-color);
-                border-radius: 0 40px 0 0;
-                padding: 0px 20px;
-                display: flex;
-                align-items: center;
-                flex: 1;
-                img{
-                    width: 200px;
-                }
-            }
+        background: #FFFFFF;
+        padding: 0 20px;
+        img{
+            width: 200px;
         }
         .rem-c{
-            background: var(--primary-color);
+            background: #FFFFFF;
             display: flex;
             align-items: center;
+            justify-content: flex-end;
             width: 100%;
             height: 100%;
-            .rem1{
-                border-radius: 0 0 0 40px;
-                background: #FFFFFF;
-                height: 100%;
+            border-radius: 0 0 0 40px;
+            ul{
+                padding: 0;
                 display: flex;
-                width: 100%;
-                justify-content: flex-end;
                 align-items: center;
-                padding: 0 50px;
+                list-style: none;
+                margin: 0;
                 gap: 20px;
-                ul{
-                    padding: 0;
-                    display: flex;
-                    align-items: center;
-                    list-style: none;
-                    margin: 0;
-                    gap: 20px;
-                    li a{
-                        text-decoration: none;
-                        color: #777777;
-                    }
-                    li a:hover{
-                        color: var(--primary-color);
-                    }
+                li a{
+                    text-decoration: none;
+                    color: #777777;
                 }
-                
+                li a:hover{
+                    color: var(--primary-color);
+                }
             }
         }
     }
