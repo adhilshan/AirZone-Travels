@@ -102,6 +102,12 @@
                             <input type="number" class="form-control" id="price" required>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Luggage</label>
+                            <input type="text" class="form-control" id="luggage" required>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Add Flight Date</button>
                 </form>
             </div>
@@ -207,7 +213,8 @@ document.getElementById('addDateForm').addEventListener('submit', async (e) => {
             toTime: document.getElementById('toTime').value,
             price: Number(document.getElementById('price').value),
             from: '',
-            to: ''
+            to: '',
+            luggage: document.getElementById('luggage').value
         };
 
         // Get flight route details to set from/to

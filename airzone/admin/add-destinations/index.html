@@ -15,6 +15,7 @@
     <div style="display: flex; flex-direction:column; max-width:300px; gap:10px;">
         <input type="text" id="num" placeholder="Destination Name" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;"/>
         <label for="fp-picker">Thumbnail (Recommended 2:3 Images)</label>
+        <input type="text" id="url" placeholder="Redirect URL" style="border:1px solid #CCCCCC; padding:10px 20px; border-radius:8px; font-size:18px;">
         <input type="file" id="fp-picker" accept=".jpg,.png,.jpeg,.gif" />
         <button onclick="upload()" style="background: #2196F3; border:none; color:#FFFFFF; padding:10px 20px; border-radius:8px;">Add Destination</button>
     </div>
@@ -65,6 +66,7 @@
               const fires = firebase.firestore();
               const data = {
                 doc: downloadURL,
+                url: document.getElementById("url").value.trim()
               };
               fires
                 .collection("airzone/destinations/popular")
